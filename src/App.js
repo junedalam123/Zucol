@@ -1,23 +1,51 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
+import DocumentList from './Pages/DocumentList';
+import DocumentViewer from './Pages/DocumentViewer';
+import LoginForm from './Pages/Login';
+import AuthRoute from './Component/AuthRoute';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loadUserFromStorage } from "./Redux/AuthSlice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUserFromStorage());
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <AuthRoute type="public">
+                <LoginForm />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/documents"
+            element={
+              <AuthRoute type="private">
+                <DocumentList />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="/documents/:id"
+            element={
+              <AuthRoute type="private">
+                <DocumentViewer />
+              </AuthRoute>
+            }
+          />
+          <Route path="/" element={<Navigate to="/login" />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
