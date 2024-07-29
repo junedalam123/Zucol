@@ -18,7 +18,6 @@ export const fetchDocuments = createAsyncThunk(
 export const fetchDocumentsDetail = createAsyncThunk(
   "documents/fetchDocumentsDetail",
   async (documentId) => {
-    console.log(documentId,"nnn")
     const response = await fetchDocumentsDetailApi(documentId);
     return response;
   }

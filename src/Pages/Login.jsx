@@ -52,7 +52,7 @@ const LoginForm = () => {
         resetForm();
         navigate("/documents");
       } catch (error) {
-        console.error("Login failed:", error);
+        alert("Login failed:", error);
       }
     }
   };

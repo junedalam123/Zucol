@@ -4,7 +4,7 @@ import { jsPDF } from 'jspdf';
 const useDownloadPdf = (doc) => {
   const handleDownload = useCallback(() => {
     if (!doc.category || !doc.description || !doc.image) {
-      console.error("Document details are incomplete");
+      alert("Document details are incomplete");
       return;
     }
 
@@ -37,10 +37,10 @@ const useDownloadPdf = (doc) => {
       };
 
       img.onerror = (error) => {
-        console.error("Failed to load the image", error);
+        alert("Failed to load the image", error);
       };
     } catch (error) {
-      console.error("Failed to generate the PDF", error);
+      alert("Failed to generate the PDF", error);
     }
   }, [doc]);
 
